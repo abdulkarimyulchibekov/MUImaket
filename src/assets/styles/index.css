@@ -228,3 +228,7 @@ img {
   margin-right: auto;
   padding: 0 20px;
 }
+
+.css-nicjba-MuiContainer-root {
+  margin-bottom: 0 !important;
+}

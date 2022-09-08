@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { DarkMode } from '../DarkMode/DarkMode';
 import { ColorModeContext } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
+import { useStore } from '../../store/store';
 import { useEmail } from '../../hooks/useEmail';
 import { usePassword } from '../../hooks/usePassword';
 import FormGroup from '@mui/material/FormGroup';
@@ -15,20 +16,26 @@ import { useCheckState } from '../../hooks/useState';
 export default function HelperTextMisaligned() {
 	const { mode, toggleMode } = React.useContext(ColorModeContext);
 	const [state, setState] = useCheckState();
-	const [token, setToken] = React.useState(false);
+	// const [token, setToken] = React.useState(false);
+	// const [password, setPassword] = usePassword();
 	const { email, setEmail } = useEmail();
-	const [password, setPassword] = usePassword();
 	const navigate = useNavigate();
 	const elEmail = React.useRef();
 	const elPassword = React.useRef();
+	// const password = useStore((state) => state.password);
+	const changePassword = useStore((state) => state.changePassword);
+	const changeEmail = useStore((state) => state.changeEmail);
 
 	const handleFormSubmit = (evt) => {
 		evt.preventDefault();
 		if (elEmail?.current?.value && elPassword.current.value) {
 			navigate('/private');
-			setEmail(elEmail?.current?.value);
-			setPassword(elPassword?.current?.value);
-			console.log(elPassword?.current?.value);
+			changeEmail(elEmail?.current?.value);
+			changePassword(elPassword?.current?.value);
+
+			// const inputVal = elInput.current.value;
+			// changePassword(elInput.current.value);
+			// elInput.current.value = '';
 			if (state) {
 				localStorage.setItem('token', JSON.stringify(elEmail.current.value));
 			}
