@@ -20,14 +20,14 @@ export const Price = () => {
 								fontWeight: '600',
 								paddingTop: 50,
 								color: '#222',
-                marginBottom: 20,
+								marginBottom: 20,
 						  }
 						: {
 								textAlign: 'center',
 								fontWeight: '600',
 								paddingTop: 50,
 								color: '#fff',
-                marginBottom: 20,
+								marginBottom: 20,
 						  }
 				}>
 				Pricing

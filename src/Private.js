@@ -1,26 +1,29 @@
 import { Container } from '@mui/system';
-import React from 'react';
-import { SearchAppBar } from './components/AppBar/AppBar';
+import React, { useEffect } from 'react';
+import SearchAppBar from './components/AppBar/AppBar';
+import ImgMediaCard from './components/Card/Card';
 import { ColorModeContext } from './context/ThemeContext';
+import { useEmail } from './hooks/useEmail';
+import { usePassword } from './hooks/usePassword';
+import { useCheckState, useState } from './hooks/useState';
 import { useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { ListItem, Typography } from '@mui/material';
 import { useSearch } from './hooks/useSearch';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import { useStore } from './store/store';
 
 export const Private = () => {
-	const { mode } = React.useContext(ColorModeContext);
+	const { mode, toggleMode } = React.useContext(ColorModeContext);
 	const arr = [
 		{
 			name: 'Lizard',
 			desc: 'Lizards are a widespread group of squamate reptiles, with over 6,000species, ranging across all continents except Antarctica',
 		},
 		{
-			name: 'lizard',
+			name: 'hizard',
 			desc: 'Lizards are a widespread group of squamate reptiles, with over 6,000species, ranging across all continents except Antarctica',
 		},
 		{
@@ -52,21 +55,22 @@ export const Private = () => {
 			desc: 'Lizards are a widespread group of squamate reptiles, with over 6,000species, ranging across all continents except Antarctica',
 		},
 	];
-
+	const { email, setEmail } = useEmail();
+	const [password, setPassword] = usePassword();
 	const navigate = useNavigate();
-	const password = useStore((state) => state.password);
-	const email = useStore((state) => state.email);
-	const [search] = useSearch();
+	// const [state] = useCheckState();
+	const [search, setSearch] = useSearch();
 	return (
 		<div
 			style={
 				mode === 'light' ? { background: '#fff' } : { background: '#222' }
 			}>
+			<SearchAppBar />
 			<Typography
 				style={
 					mode === 'light'
-						? { textAlign: 'center', marginTop: 30, color: '#222', margin: 0 }
-						: { textAlign: 'center', marginTop: 30, color: '#fff', margin: 0 }
+						? { textAlign: 'center', marginTop: 30, color: '#222' }
+						: { textAlign: 'center', marginTop: 30, color: '#fff' }
 				}
 				variant='h2'
 				gutterBottom>
@@ -104,8 +108,8 @@ export const Private = () => {
 								return items;
 							}
 						})
-						.map((e, index) => (
-							<li style={{ marginBottom: 50 }} key={index}>
+						.map((e) => (
+							<li style={{ marginBottom: 50 }} key={e}>
 								<Card sx={{ maxWidth: 345 }}>
 									<CardMedia
 										component='img'
